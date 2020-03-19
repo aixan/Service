@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-01-16T02:16:59Z</date>
+    <groups>
+        <group>
+            <name>Templates/Server hardware</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template Server Insour NF5280M5 IPMI</template>
+            <name>Template Server Insour NF5280M5 IPMI</name>
+            <groups>
+                <group>
+                    <name>Templates/Server hardware</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Fan</name>
+                </application>
+                <application>
+                    <name>Power Supply</name>
+                </application>
+                <application>
+                    <name>Temperature</name>
+                </application>
+                <application>
+                    <name>Voltage</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>CPU0_DIMM_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_cpu0_dimm_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>CPU0_DIMM_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;84</expression>
+                            <name>CPU0_DIMM_Temp 温度严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>CPU0_DIMM_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_cpu0_dimm_temp.last(0)}&gt;85</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&gt;85</expression>
+                            <name>CPU0_DIMM_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>CPU0_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_cpu0_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>CPU0_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&gt;87</expression>
+                            <name>CPU0_Temp 温度严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>CPU0_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_cpu0_temp.last(0)}&gt;88</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&gt;88</expression>
+                            <name>CPU0_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>CPU1_DIMM_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_cpu1_dimm_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>CPU1_DIMM_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&gt;84</expression>
+                            <name>CPU1_DIMM_Temp 温度严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>CPU1_DIMM_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_cpu1_dimm_temp.last(0)}&gt;85</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&gt;85</expression>
+                            <name>CPU1_DIMM_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>CPU1_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_cpu1_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>CPU1_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&gt;87</expression>
+                            <name>CPU1_Temp 温度严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>CPU1_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_cpu1_temp.last(0)}&gt;88</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&gt;88</expression>
+                            <name>CPU1_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>FAN0_F_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan0_f_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN0_F_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>FAN0_R_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan0_r_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN0_R_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>FAN1_F_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan1_f_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN1_F_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>FAN1_R_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan1_r_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN1_R_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>FAN2_F_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan2_f_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN2_F_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>FAN2_R_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan2_r_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN2_R_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>FAN3_F_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan3_f_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN3_F_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>FAN3_R_Speed</name>
+                    <type>IPMI</type>
+                    <key>ipmi_fan3_r_speed</key>
+                    <history>1w</history>
+                    <units>RPM</units>
+                    <ipmi_sensor>FAN3_R_Speed</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Fan</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Inlet_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_inlet_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>Inlet_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&gt;38</expression>
+                            <name>Inlet_Temp 温度严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&gt;40</expression>
+                            <name>Inlet_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>Inlet_Temp 温度严重 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_inlet_temp.last(0)}&gt;38</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Outlet_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_outlet_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>Outlet_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&gt;60</expression>
+                            <name>Outlet_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>P3V3</name>
+                    <type>IPMI</type>
+                    <key>ipmi_p3v3</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <ipmi_sensor>P3V3</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Voltage</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&lt;3.06 or {last(0)}&gt;3.54</expression>
+                            <name>P3V3 严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>P3V3 灾难 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_p3v3.last(0)}&lt;2.96 or {Template Server Insour NF5280M5 IPMI:ipmi_p3v3.last(0)}&gt;3.64</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&lt;2.96 or {last(0)}&gt;3.64</expression>
+                            <name>P3V3 灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>P5V</name>
+                    <type>IPMI</type>
+                    <key>ipmi_p5v</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <ipmi_sensor>P5V</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Voltage</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&lt;4.64 or {last(0)}&gt;5.36</expression>
+                            <name>P5V 严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>P5V 灾难 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_p5v.last(0)}&lt;4.5 or {Template Server Insour NF5280M5 IPMI:ipmi_p5v.last(0)}&gt;5.5</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&lt;4.5 or {last(0)}&gt;5.5</expression>
+                            <name>P5V 灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>P12V</name>
+                    <type>IPMI</type>
+                    <key>ipmi_p12v</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <ipmi_sensor>P12V</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Voltage</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(0)}&lt;11.16 or {last(0)}&gt;13.08</expression>
+                            <name>P12V 严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>P12V 灾难 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_p12v.last(0)}&lt;10.8 or {Template Server Insour NF5280M5 IPMI:ipmi_p12v.last(0)}&gt;13.44</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(0)}&lt;10.8 or {last(0)}&gt;13.44</expression>
+                            <name>P12V 灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>PCH_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_pch_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>PCH_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;109</expression>
+                            <name>PCH_Temp 温度严重 [{ITEM.VALUE}]</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}&gt;110</expression>
+                            <name>PCH_Temp 温度灾难 [{ITEM.VALUE}]</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>PCH_Temp 温度严重 [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_pch_temp.last()}&gt;109</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Total_Power</name>
+                    <type>IPMI</type>
+                    <key>ipmi_power</key>
+                    <history>1w</history>
+                    <units>W</units>
+                    <ipmi_sensor>Total_Power</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Power Supply</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=0</expression>
+                            <name>电源警告  [{ITEM.VALUE}]</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>PSU0_POUT</name>
+                    <type>IPMI</type>
+                    <key>ipmi_psu0_pout</key>
+                    <history>1w</history>
+                    <units>W</units>
+                    <ipmi_sensor>PSU0_POUT</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Power Supply</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=0</expression>
+                            <name>PSU0_POUT [{ITEM.VALUE}]</name>
+                            <priority>WARNING</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>PSU1_POUT</name>
+                    <type>IPMI</type>
+                    <key>ipmi_psu1_pout</key>
+                    <history>1w</history>
+                    <units>W</units>
+                    <ipmi_sensor>PSU1_POUT</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Power Supply</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=0</expression>
+                            <name>PSU1_POUT [{ITEM.VALUE}]</name>
+                            <priority>WARNING</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>电源警告  [{ITEM.VALUE}]</name>
+                                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>RAID0_Temp</name>
+                    <type>IPMI</type>
+                    <key>ipmi_raid0_temp</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <ipmi_sensor>RAID0_Temp</ipmi_sensor>
+                    <applications>
+                        <application>
+                            <name>Temperature</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+        </template>
+    </templates>
+    <triggers>
+        <trigger>
+            <expression>{Template Server Insour NF5280M5 IPMI:ipmi_fan0_f_speed.last()}&lt;3500 or {Template Server Insour NF5280M5 IPMI:ipmi_fan0_r_speed.last()}&lt;3500 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_f_speed.last()}&lt;3500 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_r_speed.last()}&lt;3500 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_f_speed.last()}&lt;3500 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_r_speed.last()}&lt;3500 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_f_speed.last()}&lt;3500 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_r_speed.last()}&lt;3500</expression>
+            <name>FAN 低速警告 [{ITEM.VALUE}]</name>
+            <priority>WARNING</priority>
+        </trigger>
+        <trigger>
+            <expression>{Template Server Insour NF5280M5 IPMI:ipmi_fan0_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan0_r_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_r_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_r_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_r_speed.last()}&gt;7000</expression>
+            <name>FAN 高速警告 [{ITEM.VALUE}]</name>
+            <priority>WARNING</priority>
+            <dependencies>
+                <dependency>
+                    <name>电源警告  [{ITEM.VALUE}]</name>
+                    <expression>{Template Server Insour NF5280M5 IPMI:ipmi_power.last()}=0</expression>
+                </dependency>
+            </dependencies>
+        </trigger>
+    </triggers>
+    <graphs>
+        <graph>
+            <name>温度</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_cpu0_dimm_temp</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_cpu0_temp</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_cpu1_dimm_temp</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>A54F10</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_cpu1_temp</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>FC6EA3</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_inlet_temp</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>5</sortorder>
+                    <color>6C59DC</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_outlet_temp</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>6</sortorder>
+                    <color>AC8C14</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_pch_temp</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>7</sortorder>
+                    <color>611F27</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_raid0_temp</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>电压</name>
+            <yaxismax>5.5000</yaxismax>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <ymax_type_1>FIXED</ymax_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>00CCCC</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_p3v3</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>3333FF</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_p5v</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>A54F10</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_p12v</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>电源</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_psu0_pout</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_psu1_pout</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_power</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>风扇转速</name>
+            <graph_items>
+                <graph_item>
+                    <color>000000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan0_f_speed</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>FF0000</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan0_r_speed</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>FC6EA3</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan1_f_speed</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>6C59DC</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan1_r_speed</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>AC8C14</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan2_f_speed</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>5</sortorder>
+                    <color>611F27</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan2_r_speed</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>6</sortorder>
+                    <color>F230E0</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan3_f_speed</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>7</sortorder>
+                    <color>5CCD18</color>
+                    <item>
+                        <host>Template Server Insour NF5280M5 IPMI</host>
+                        <key>ipmi_fan3_r_speed</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>

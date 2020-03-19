@@ -1,0 +1,4 @@
+#rabbitmq安装
+docker pull rabbitmq:management
+#管理页面  http://IP:15672/#/   # guest  guest
+docker run --name rabbitmq -d -p 15672:15672 -p 5672:5672 rabbitmq:management	

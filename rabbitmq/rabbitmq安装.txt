@@ -1,0 +1,14 @@
+#rabbitmq安装
+	
+yum install rabbitmq-server erlang
+systemctl start rabbitmq-server && systemctl enable rabbitmq-server
+
+# 启动web插件  rabbitmq_management
+/usr/lib/rabbitmq/bin/rabbitmq-plugins list
+/usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
+#管理页面  http://IP:15672/#/   # guest  guest
+rabbitmqctl add_user root root
+rabbitmqctl set_permissions root ".*" ".*" ".*"
+rabbitmqctl set_user_tags root administrator
+rabbitmqctl list_users
+rabbitmqctl change_password guest guest
