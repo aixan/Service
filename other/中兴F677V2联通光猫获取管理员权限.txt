@@ -1,0 +1,17 @@
+LOID 0144865204
+2_INTERNET_R_VID_485
+1_TR069_R_VID_180
+SLAAC
+
+先用光猫后边的密码进管理界面记录下INTERNET和iptv的VID和LOID码
+按住猫上的重置键30秒以上等猫重置了重启进  http://192.168.1.1/hidden_version_switch.gch 选择default version密码是CUAdmin确定后猫会重启
+光猫重启后用putty选telnet用户名root密码Zte521
+setmac 1 2180 0144865204
+sendcmd 1 DB set PDTCTUSERINFO 0 tForcePushFlg 0
+sendcmd 1 DB set PDTCTUSERINFO 0 Result 1
+sendcmd 1 DB set CltLmt 8 Enable 0
+sendcmd 1 DB set DevAuthInfo 0 Enable 1
+sendcmd 1 DB save
+sendcmd 1 DB set TelnetCfg 0 Lan_EnableAfterOlt 1
+sendcmd 1 DB save
+最后进192.168.1.1/cu.html管理员账号登录密码就是CUAdmin，进去设置桥接还有IPTV重启光猫就搞定了
