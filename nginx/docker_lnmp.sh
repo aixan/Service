@@ -1,0 +1,3 @@
+docker run --name mysql -t -e MYSQL_ROOT_PASSWORD="Passw0rd" -v /data/mysql/data:/var/lib/mysql -v /data/mysql/conf:/etc/mysql/conf.d -p 3306:3306 --restart=always -d mysql:5.7 --character-set-server=utf8 --collation-server=utf8_bin
+docker run --name php-fpm -t -v /data/nginx/html:/var/www/html --link mysql:mysql -p 9000:9000 --restart=always -d php:fpm
+docker run --name nginx -t -p 80:80 -p 443:443 -v /data/nginx/html:/usr/share/nginx/html -v /data/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /data/nginx/conf/mime.types:/etc/nginx/mime.types -v /data/nginx/logs:/var/log/nginx -v /data/nginx/conf.d:/etc/nginx/conf.d -v /data/nginx/ssl:/etc/nginx/ssl --link php-fpm:php-fpm --restart=always -d nginx:latest
