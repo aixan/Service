@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-01-16T02:16:59Z</date>
+    <date>2020-06-03T07:29:36Z</date>
     <groups>
         <group>
             <name>Templates/Server hardware</name>
@@ -35,7 +35,7 @@
                     <name>CPU0_DIMM_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_cpu0_dimm_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>CPU0_DIMM_Temp</ipmi_sensor>
@@ -77,7 +77,7 @@
                     <name>CPU0_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_cpu0_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>CPU0_Temp</ipmi_sensor>
@@ -119,7 +119,7 @@
                     <name>CPU1_DIMM_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_cpu1_dimm_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>CPU1_DIMM_Temp</ipmi_sensor>
@@ -161,7 +161,7 @@
                     <name>CPU1_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_cpu1_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>CPU1_Temp</ipmi_sensor>
@@ -203,7 +203,7 @@
                     <name>FAN0_F_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan0_f_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN0_F_Speed</ipmi_sensor>
                     <applications>
@@ -216,7 +216,7 @@
                     <name>FAN0_R_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan0_r_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN0_R_Speed</ipmi_sensor>
                     <applications>
@@ -229,7 +229,7 @@
                     <name>FAN1_F_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan1_f_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN1_F_Speed</ipmi_sensor>
                     <applications>
@@ -242,7 +242,7 @@
                     <name>FAN1_R_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan1_r_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN1_R_Speed</ipmi_sensor>
                     <applications>
@@ -255,7 +255,7 @@
                     <name>FAN2_F_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan2_f_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN2_F_Speed</ipmi_sensor>
                     <applications>
@@ -268,7 +268,7 @@
                     <name>FAN2_R_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan2_r_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN2_R_Speed</ipmi_sensor>
                     <applications>
@@ -281,7 +281,7 @@
                     <name>FAN3_F_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan3_f_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN3_F_Speed</ipmi_sensor>
                     <applications>
@@ -294,7 +294,7 @@
                     <name>FAN3_R_Speed</name>
                     <type>IPMI</type>
                     <key>ipmi_fan3_r_speed</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>RPM</units>
                     <ipmi_sensor>FAN3_R_Speed</ipmi_sensor>
                     <applications>
@@ -307,7 +307,7 @@
                     <name>Inlet_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_inlet_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>Inlet_Temp</ipmi_sensor>
@@ -349,7 +349,7 @@
                     <name>Outlet_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_outlet_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>Outlet_Temp</ipmi_sensor>
@@ -376,7 +376,7 @@
                     <name>P3V3</name>
                     <type>IPMI</type>
                     <key>ipmi_p3v3</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>V</units>
                     <ipmi_sensor>P3V3</ipmi_sensor>
@@ -418,7 +418,7 @@
                     <name>P5V</name>
                     <type>IPMI</type>
                     <key>ipmi_p5v</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>V</units>
                     <ipmi_sensor>P5V</ipmi_sensor>
@@ -460,7 +460,7 @@
                     <name>P12V</name>
                     <type>IPMI</type>
                     <key>ipmi_p12v</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>V</units>
                     <ipmi_sensor>P12V</ipmi_sensor>
@@ -502,7 +502,7 @@
                     <name>PCH_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_pch_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>PCH_Temp</ipmi_sensor>
@@ -534,7 +534,7 @@
                     <name>Total_Power</name>
                     <type>IPMI</type>
                     <key>ipmi_power</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>W</units>
                     <ipmi_sensor>Total_Power</ipmi_sensor>
                     <applications>
@@ -554,7 +554,7 @@
                     <name>PSU0_POUT</name>
                     <type>IPMI</type>
                     <key>ipmi_psu0_pout</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>W</units>
                     <ipmi_sensor>PSU0_POUT</ipmi_sensor>
                     <applications>
@@ -580,7 +580,7 @@
                     <name>PSU1_POUT</name>
                     <type>IPMI</type>
                     <key>ipmi_psu1_pout</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <units>W</units>
                     <ipmi_sensor>PSU1_POUT</ipmi_sensor>
                     <applications>
@@ -606,7 +606,7 @@
                     <name>RAID0_Temp</name>
                     <type>IPMI</type>
                     <key>ipmi_raid0_temp</key>
-                    <history>1w</history>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>C</units>
                     <ipmi_sensor>RAID0_Temp</ipmi_sensor>
@@ -626,7 +626,7 @@
             <priority>WARNING</priority>
         </trigger>
         <trigger>
-            <expression>{Template Server Insour NF5280M5 IPMI:ipmi_fan0_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan0_r_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_r_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_r_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_f_speed.last()}&gt;7000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_r_speed.last()}&gt;7000</expression>
+            <expression>{Template Server Insour NF5280M5 IPMI:ipmi_fan0_f_speed.last()}&gt;8000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan0_r_speed.last()}&gt;8000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_f_speed.last()}&gt;8000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan1_r_speed.last()}&gt;8000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_f_speed.last()}&gt;8000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan2_r_speed.last()}&gt;8000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_f_speed.last()}&gt;8000 or {Template Server Insour NF5280M5 IPMI:ipmi_fan3_r_speed.last()}&gt;8000</expression>
             <name>FAN 高速警告 [{ITEM.VALUE}]</name>
             <priority>WARNING</priority>
             <dependencies>
