@@ -1,14 +1,15 @@
 # 卸载系统自带boost、mysql、mariadb
 yum -y remove boost-* mysql mariadb-*
 # 安装依赖包
-yum -y install cmake make gcc gcc-c++ bison ncurses ncurses-devel
+yum -y install gcc gcc-c++ autoconf automake zlib* libxml* ncurses-devel libtool-ltdl-devel* make cmake
 # 下载解压mysql源码包
-wget https://svnet.cn/File/Mysql/mysql-boost-5.7.29.tar.gz
-tar xf mysql-boost-5.7.29.tar.gz -C /usr/local/src/
+wget https://svnet.cn/aixan/File/raw/master/Mysql/mysql-boost-5.7.29.tar.gz
+tar xf mysql-boost-5.7.29.tar.gz -C /usr/local/src/ ; cd /usr/local/src/mysql-5.7.29/
 # 创建mysql运行用户
 useradd -M -s /sbin/nologin mysql
+#创建安装目录和数据存放目录（生产环境建议增加一块硬盘挂载作mysql目录）
+mkdir -p /usr/local/mysql/data
 #源码编译安装
-cd /usr/local/src/mysql-5.7.29/
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
 -DMYSQL_DATADIR=/usr/local/mysql/data \
 -DSYSCONFDIR=/etc \
@@ -25,6 +26,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
 -DDEFAULT_COLLATION=utf8_general_ci \
 -DDOWNLOAD_BOOST=1 \
 -DWITH_BOOST=/usr/local/src/mysql-5.7.29/boost/boost_1_59_0
+#编译的参数可以参考http://dev.mysql.com/doc/refman/5.6/en/source-configuration-options.html
 make && make install
 # 添加环境变量
 cat > /etc/profile.d/mysql.sh < "EOF"
