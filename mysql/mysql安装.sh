@@ -48,6 +48,7 @@ EOF
 cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
 chmod +x /etc/init.d/mysqld
 chown -R mysql:mysql /usr/local/mysql
+chkconfig --add mysqld && chkconfig mysqld on
 # 初始化数据库
 /etc/init.d/mysqld start
 rm -rf /usr/local/mysql/data
