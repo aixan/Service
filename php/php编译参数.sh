@@ -7,7 +7,7 @@ yum remove libzip cmake
 useradd -M -s /sbin/nologin nginx
 
 #解决依赖
-yum -y install wget php-mcrypt libmcrypt libmcrypt-devel php-pear libxml2 libxml2-devel curl curl-devel libjpeg libjpeg-devel libpng libpng-devel freetype-devel openssl openssl-devel gcc gcc-c++ autoconf automake zlib zlib-devel openssl openssl-devel gcc gcc-c++ autoconf automake
+yum -y install wget php-mcrypt libmcrypt libmcrypt-devel php-pear libxml2 libxml2-devel curl curl-devel libjpeg libjpeg-devel libpng libpng-devel freetype-devel openssl openssl-devel gcc gcc-c++ autoconf automake zlib zlib-devel openssl openssl-devel gcc gcc-c++ autoconf automake sqlite-devel oniguruma oniguruma-devel
 
 #添加搜索路径到配置文件
 cat >> /etc/ld.so.conf << "EOF"
