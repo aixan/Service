@@ -118,11 +118,15 @@ EOF
 由于版本更新频繁，这里指定版本号部署：
 
 ```
-$ yum install -y kubelet-1.17.0 kubeadm-1.17.0 kubectl-1.17.0
+$ yum install -y kubelet-1.18.0 kubeadm-1.18.0 kubectl-1.18.0
 $ systemctl enable kubelet
 ```
 
 ## 5. 部署Kubernetes Master
+
+参考文档： https://kubernetes.io/zh/docs/reference/setup-tools/kubeadm/kubeadm-init/#config-file 
+
+ https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node 
 
 在192.168.31.61（Master）执行。
 
@@ -130,12 +134,28 @@ $ systemctl enable kubelet
 $ kubeadm init \
   --apiserver-advertise-address=192.168.31.61 \
   --image-repository registry.aliyuncs.com/google_containers \
-  --kubernetes-version v1.17.0 \
+  --kubernetes-version v1.18.0 \
   --service-cidr=10.96.0.0/12 \
   --pod-network-cidr=10.244.0.0/16
+  --ignore-preflight-errors=all
 ```
 
 由于默认拉取镜像地址k8s.gcr.io国内无法访问，这里指定阿里云镜像仓库地址。
+
+或者使用配置文件引导：
+
+```
+$ vi kubeadm.conf
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.18.0
+imageRepository: registry.aliyuncs.com/google_containers 
+networking:
+  podSubnet: 10.244.0.0/16 
+  serviceSubnet: 10.96.0.0/12 
+
+$ kubeadm init --config kubeadm.conf ignore-preflight-errors=all  
+```
 
 使用kubectl工具：
 
@@ -146,17 +166,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 $ kubectl get nodes
 ```
 
-## 6. 安装Pod网络插件（CNI）
-
-```
-$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-```
-
-确保能够访问到quay.io这个registery。
-
-如果Pod镜像下载失败，可以改成这个镜像地址：lizhenliang/flannel:v0.11.0-amd64
-
-## 7. 加入Kubernetes Node
+## 6. 加入Kubernetes Node
 
 在192.168.31.62/63（Node）执行。
 
@@ -167,7 +177,75 @@ $ kubeadm join 192.168.31.61:6443 --token esce21.q6hetwm8si29qxwn \
     --discovery-token-ca-cert-hash sha256:00603a05805807501d7181c3d60b478788408cfe6cedefedb1f97569708be9c5
 ```
 
+默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：
+
+```
+# kubeadm token create
+# kubeadm token list
+# openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+63bca849e0e01691ae14eab449570284f0c3ddeea590f8da988c07fe2729e924
+
+# kubeadm join 192.168.31.61:6443 --token nuja6n.o3jrhsffiqs9swnu --discovery-token-ca-cert-hash sha256:63bca849e0e01691ae14eab449570284f0c3ddeea590f8da988c07fe2729e924
+```
+
+kubeadm token create --print-join-command
+
+<https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-join/>
+
+## 7. 安装Pod网络插件（CNI）
+
+ https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network 
+
+注意：只需要部署下面其中一个，推荐Calico。
+
+### 7.1 Calico
+
+Calico是一个纯三层的数据中心网络方案，Calico支持广泛的平台，包括Kubernetes、OpenStack等。
+
+Calico 在每一个计算节点利用 Linux Kernel 实现了一个高效的虚拟路由器（ vRouter） 来负责数据转发，而每个 vRouter 通过 BGP 协议负责把自己上运行的 workload 的路由信息向整个 Calico 网络内传播。
+
+此外，Calico  项目还实现了 Kubernetes 网络策略，提供ACL功能。
+
+ https://docs.projectcalico.org/getting-started/kubernetes/quickstart 
+
+```
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+```
+
+下载完后还需要修改里面配置项：
+
+- 定义Pod网络（CALICO_IPV4POOL_CIDR），与前面pod CIDR配置一样
+- 选择工作模式（CALICO_IPV4POOL_IPIP），支持**BGP（Never）**、**IPIP（Always）**、**CrossSubnet**（开启BGP并支持跨子网）
+
+修改完后应用清单：
+
+```
+# kubectl apply -f calico.yaml
+# kubectl get pods -n kube-system
+```
+
+### 7.2 Flannel
+
+Flannel是CoreOS维护的一个网络组件，Flannel为每个Pod提供全局唯一的IP，Flannel使用ETCD来存储Pod子网与Node IP之间的关系。flanneld守护进程在每台主机上运行，并负责维护ETCD信息和路由数据包。
+
+```
+$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+```
+
+```
+wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+sed -i -r "s#quay.io/coreos/flannel:.*-amd64#lizhenliang/flannel:v0.11.0-amd64#g" kube-flannel.yml
+```
+
+确保能够访问到quay.io这个registery。
+
+如果Pod镜像下载失败，可以改成这个镜像地址：lizhenliang/flannel:v0.11.0-amd64
+
 ## 8. 测试kubernetes集群
+
+- 验证Pod工作
+- 验证Pod网络通信
+- 验证DNS解析
 
 在Kubernetes集群中创建一个pod，验证是否正常运行：
 
