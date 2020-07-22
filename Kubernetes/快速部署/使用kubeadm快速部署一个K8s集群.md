@@ -36,11 +36,11 @@ $ kubeadm join <Master节点的IP和端口 >
 
  ![kubernetesæ¶æå¾](https://blog-1252881505.cos.ap-beijing.myqcloud.com/k8s/single-master.jpg) 
 
-| 角色       | IP            |
-| ---------- | ------------- |
-| k8s-master | 192.168.31.61 |
-| k8s-node1  | 192.168.31.62 |
-| k8s-node2  | 192.168.31.63 |
+| 角色       | IP        |
+| ---------- | --------- |
+| k8s-master | 10.0.0.11 |
+| k8s-node1  | 10.0.0.12 |
+| k8s-node2  | 10.0.0.13 |
 
 ```
 关闭防火墙：
@@ -48,7 +48,7 @@ $ systemctl stop firewalld
 $ systemctl disable firewalld
 
 关闭selinux：
-$ sed -i 's/enforcing/disabled/' /etc/selinux/config  # 永久
+$ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config  # 永久
 $ setenforce 0  # 临时
 
 关闭swap：
@@ -60,9 +60,9 @@ $ hostnamectl set-hostname <hostname>
 
 在master添加hosts：
 $ cat >> /etc/hosts << EOF
-192.168.31.61 k8s-master
-192.168.31.62 k8s-node1
-192.168.31.63 k8s-node2
+10.0.0.11 k8s-m
+10.0.0.12 k8s-n1
+10.0.0.13 k8s-n2
 EOF
 
 将桥接的IPv4流量传递到iptables的链：
@@ -92,9 +92,9 @@ Docker version 18.06.1-ce, build e68fc7a
 ```
 
 ```
-# cat > /etc/docker/daemon.json << EOF
+$ cat > /etc/docker/daemon.json << EOF
 {
-  "registry-mirrors": ["https://b9pmyelo.mirror.aliyuncs.com"]
+  "registry-mirrors": ["https://oitxg1ek.mirror.aliyuncs.com"]
 }
 EOF
 ```
@@ -119,7 +119,7 @@ EOF
 
 ```
 $ yum install -y kubelet-1.18.0 kubeadm-1.18.0 kubectl-1.18.0
-$ systemctl enable kubelet
+# systemctl enable kubelet
 ```
 
 ## 5. 部署Kubernetes Master
@@ -128,15 +128,15 @@ $ systemctl enable kubelet
 
  https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node 
 
-在192.168.31.61（Master）执行。
+在10.0.0.11（Master）执行。
 
 ```
 $ kubeadm init \
-  --apiserver-advertise-address=192.168.31.61 \
+  --apiserver-advertise-address=10.0.0.11 \
   --image-repository registry.aliyuncs.com/google_containers \
   --kubernetes-version v1.18.0 \
   --service-cidr=10.96.0.0/12 \
-  --pod-network-cidr=10.244.0.0/16
+  --pod-network-cidr=10.244.0.0/16 \
   --ignore-preflight-errors=all
 ```
 
@@ -160,9 +160,9 @@ $ kubeadm init --config kubeadm.conf ignore-preflight-errors=all
 使用kubectl工具：
 
 ```bash
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+$ mkdir -p $HOME/.kube
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 $ kubectl get nodes
 ```
 
@@ -173,8 +173,8 @@ $ kubectl get nodes
 向集群添加新节点，执行在kubeadm init输出的kubeadm join命令：
 
 ```
-$ kubeadm join 192.168.31.61:6443 --token esce21.q6hetwm8si29qxwn \
-    --discovery-token-ca-cert-hash sha256:00603a05805807501d7181c3d60b478788408cfe6cedefedb1f97569708be9c5
+$ kubeadm join 10.0.0.11:6443 --token k0ouup.iuhw8vci3zz0wfka \
+    --discovery-token-ca-cert-hash sha256:3460474f05a6a5be745a442952fd9e902d6aae2d43ef3287b465b14bdc31ec2b
 ```
 
 默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：
@@ -229,12 +229,9 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 Flannel是CoreOS维护的一个网络组件，Flannel为每个Pod提供全局唯一的IP，Flannel使用ETCD来存储Pod子网与Node IP之间的关系。flanneld守护进程在每台主机上运行，并负责维护ETCD信息和路由数据包。
 
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-```
-
-```
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 sed -i -r "s#quay.io/coreos/flannel:.*-amd64#lizhenliang/flannel:v0.11.0-amd64#g" kube-flannel.yml
+$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
 确保能够访问到quay.io这个registery。
@@ -252,7 +249,8 @@ sed -i -r "s#quay.io/coreos/flannel:.*-amd64#lizhenliang/flannel:v0.11.0-amd64#g
 ```
 $ kubectl create deployment nginx --image=nginx
 $ kubectl expose deployment nginx --port=80 --type=NodePort
-$ kubectl get pod,svc
+$ kubectl get pods,svc
+$ kubectl get pods -o wide
 ```
 
 访问地址：http://NodeIP:Port  
@@ -260,7 +258,7 @@ $ kubectl get pod,svc
 ## 9. 部署 Dashboard
 
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.3/aio/deploy/recommended.yaml
 ```
 
 默认Dashboard只能集群内部访问，修改Service为NodePort类型，暴露到外部：
@@ -277,6 +275,7 @@ spec:
   ports:
     - port: 443
       targetPort: 8443
+      nodePort: 30001
   selector:
     k8s-app: kubernetes-dashboard
 ```
@@ -290,6 +289,10 @@ kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --
 kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk '/dashboard-admin/{print $1}')
 ```
 使用输出的token登录Dashboard。
+
+设置中文
+
+
 
 
 
