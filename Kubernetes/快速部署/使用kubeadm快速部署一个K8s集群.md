@@ -34,7 +34,7 @@ $ kubeadm join <Master节点的IP和端口 >
 
 ## 3. 准备环境
 
- ![kubernetesæ¶æå¾](https://blog-1252881505.cos.ap-beijing.myqcloud.com/k8s/single-master.jpg) 
+ ![kubernetes](https://blog-1252881505.cos.ap-beijing.myqcloud.com/k8s/single-master.jpg) 
 
 | 角色       | IP        |
 | ---------- | --------- |
@@ -44,37 +44,37 @@ $ kubeadm join <Master节点的IP和端口 >
 
 ```
 关闭防火墙：
-$ systemctl stop firewalld
-$ systemctl disable firewalld
+systemctl stop firewalld
+systemctl disable firewalld
 
 关闭selinux：
-$ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config  # 永久
-$ setenforce 0  # 临时
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config  # 永久
+setenforce 0  # 临时
 
 关闭swap：
-$ swapoff -a  # 临时
-$ vim /etc/fstab  # 永久
+swapoff -a  # 临时
+vim /etc/fstab  # 永久
 
 设置主机名：
-$ hostnamectl set-hostname <hostname>
+hostnamectl set-hostname <hostname>
 
 在master添加hosts：
-$ cat >> /etc/hosts << EOF
+cat >> /etc/hosts << EOF
 10.0.0.11 k8s-m
 10.0.0.12 k8s-n1
 10.0.0.13 k8s-n2
 EOF
 
 将桥接的IPv4流量传递到iptables的链：
-$ cat > /etc/sysctl.d/k8s.conf << EOF
+cat > /etc/sysctl.d/k8s.conf << EOF
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
-$ sysctl --system  # 生效
+sysctl --system  # 生效
 
 时间同步：
-$ yum install ntpdate -y
-$ ntpdate time.windows.com
+yum install ntpdate -y
+ntpdate ntp.aliyun.com
 ```
 
 ## 4. 所有节点安装Docker/kubeadm/kubelet
@@ -84,15 +84,16 @@ Kubernetes默认CRI（容器运行时）为Docker，因此先安装Docker。
 ### 4.1 安装Docker
 
 ```
-$ wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo
-$ yum -y install docker-ce-18.06.1.ce-3.el7
-$ systemctl enable docker && systemctl start docker
-$ docker --version
+wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo
+yum -y install docker-ce-18.06.1.ce-3.el7
+systemctl enable docker && systemctl start docker
+docker --version
+
 Docker version 18.06.1-ce, build e68fc7a
 ```
 
 ```
-$ cat > /etc/docker/daemon.json << EOF
+cat > /etc/docker/daemon.json << EOF
 {
   "registry-mirrors": ["https://oitxg1ek.mirror.aliyuncs.com"]
 }
@@ -102,7 +103,7 @@ EOF
 ### 4.2 添加阿里云YUM软件源
 
 ```
-$ cat > /etc/yum.repos.d/kubernetes.repo << EOF
+cat > /etc/yum.repos.d/kubernetes.repo << EOF
 [kubernetes]
 name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
@@ -118,8 +119,8 @@ EOF
 由于版本更新频繁，这里指定版本号部署：
 
 ```
-$ yum install -y kubelet-1.18.0 kubeadm-1.18.0 kubectl-1.18.0
-# systemctl enable kubelet
+yum install -y kubelet-1.18.0 kubeadm-1.18.0 kubectl-1.18.0
+systemctl enable kubelet
 ```
 
 ## 5. 部署Kubernetes Master
@@ -131,7 +132,7 @@ $ yum install -y kubelet-1.18.0 kubeadm-1.18.0 kubectl-1.18.0
 在10.0.0.11（Master）执行。
 
 ```
-$ kubeadm init \
+kubeadm init \
   --apiserver-advertise-address=10.0.0.11 \
   --image-repository registry.aliyuncs.com/google_containers \
   --kubernetes-version v1.18.0 \
@@ -145,7 +146,8 @@ $ kubeadm init \
 或者使用配置文件引导：
 
 ```
-$ vi kubeadm.conf
+vi kubeadm.conf
+
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.18.0
@@ -154,16 +156,16 @@ networking:
   podSubnet: 10.244.0.0/16 
   serviceSubnet: 10.96.0.0/12 
 
-$ kubeadm init --config kubeadm.conf ignore-preflight-errors=all  
+kubeadm init --config kubeadm.conf ignore-preflight-errors=all  
 ```
 
 使用kubectl工具：
 
 ```bash
-$ mkdir -p $HOME/.kube
-$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
-$ kubectl get nodes
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl get nodes
 ```
 
 ## 6. 加入Kubernetes Node
@@ -173,22 +175,21 @@ $ kubectl get nodes
 向集群添加新节点，执行在kubeadm init输出的kubeadm join命令：
 
 ```
-$ kubeadm join 10.0.0.11:6443 --token k0ouup.iuhw8vci3zz0wfka \
-    --discovery-token-ca-cert-hash sha256:3460474f05a6a5be745a442952fd9e902d6aae2d43ef3287b465b14bdc31ec2b
+kubeadm join 10.0.0.11:6443 --token k0ouup.iuhw8vci3zz0wfka \
+  --discovery-token-ca-cert-hash sha256:3460474f05a6a5be745a442952fd9e902d6aae2d43ef3287b465b14bdc31ec2b
 ```
 
 默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：
 
 ```
-# kubeadm token create
-# kubeadm token list
-# openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+kubeadm token list # 列出token信息
+kubeadm token create --print-join-command # 生成一个新的token --ttl=0 设置永不过期
+
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 63bca849e0e01691ae14eab449570284f0c3ddeea590f8da988c07fe2729e924
 
-# kubeadm join 192.168.31.61:6443 --token nuja6n.o3jrhsffiqs9swnu --discovery-token-ca-cert-hash sha256:63bca849e0e01691ae14eab449570284f0c3ddeea590f8da988c07fe2729e924
+kubeadm join 192.168.31.61:6443 --token nuja6n.o3jrhsffiqs9swnu --discovery-token-ca-cert-hash sha256:63bca849e0e01691ae14eab449570284f0c3ddeea590f8da988c07fe2729e924
 ```
-
-kubeadm token create --print-join-command
 
 <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-join/>
 
@@ -220,8 +221,8 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 修改完后应用清单：
 
 ```
-# kubectl apply -f calico.yaml
-# kubectl get pods -n kube-system
+kubectl apply -f calico.yaml
+kubectl get pods -n kube-system
 ```
 
 ### 7.2 Flannel
@@ -247,10 +248,10 @@ $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Docum
 在Kubernetes集群中创建一个pod，验证是否正常运行：
 
 ```
-$ kubectl create deployment nginx --image=nginx
-$ kubectl expose deployment nginx --port=80 --type=NodePort
-$ kubectl get pods,svc
-$ kubectl get pods -o wide
+kubectl create deployment nginx --image=nginx
+kubectl expose deployment nginx --port=80 --type=NodePort
+kubectl get pods,svc
+kubectl get pods -o wide
 ```
 
 访问地址：http://NodeIP:Port  
@@ -272,6 +273,7 @@ metadata:
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
 spec:
+  type:NodePort
   ports:
     - port: 443
       targetPort: 8443
@@ -289,12 +291,6 @@ kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --
 kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk '/dashboard-admin/{print $1}')
 ```
 使用输出的token登录Dashboard。
-
-设置中文
-
-
-
-
 
 > 直播地址：https://ke.qq.com/course/266656
 
