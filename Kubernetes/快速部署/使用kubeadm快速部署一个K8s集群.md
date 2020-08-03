@@ -36,11 +36,11 @@ $ kubeadm join <Master节点的IP和端口 >
 
  ![kubernetes](https://blog-1252881505.cos.ap-beijing.myqcloud.com/k8s/single-master.jpg) 
 
-| 角色       | IP        |
-| ---------- | --------- |
-| k8s-master | 10.0.0.11 |
-| k8s-node1  | 10.0.0.12 |
-| k8s-node2  | 10.0.0.13 |
+| 角色       | IP           |
+| ---------- | ------------ |
+| k8s-master | 192.168.0.11 |
+| k8s-node1  | 192.168.0.12 |
+| k8s-node2  | 192.168.0.13 |
 
 ```
 关闭防火墙：
@@ -60,9 +60,9 @@ hostnamectl set-hostname <hostname>
 
 在master添加hosts：
 cat >> /etc/hosts << EOF
-10.0.0.11 k8s-m
-10.0.0.12 k8s-n1
-10.0.0.13 k8s-n2
+192.168.0.11 k8s-m
+192.168.0.12 k8s-n1
+192.168.0.13 k8s-n2
 EOF
 
 将桥接的IPv4流量传递到iptables的链：
@@ -129,11 +129,11 @@ systemctl enable kubelet
 
  https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node 
 
-在10.0.0.11（Master）执行。
+在192.168.0.11（Master）执行。
 
 ```
 kubeadm init \
-  --apiserver-advertise-address=10.0.0.11 \
+  --apiserver-advertise-address=192.168.0.11 \
   --image-repository registry.aliyuncs.com/google_containers \
   --kubernetes-version v1.18.0 \
   --service-cidr=10.96.0.0/12 \
@@ -175,8 +175,8 @@ kubectl get nodes
 向集群添加新节点，执行在kubeadm init输出的kubeadm join命令：
 
 ```
-kubeadm join 10.0.0.11:6443 --token k0ouup.iuhw8vci3zz0wfka \
-  --discovery-token-ca-cert-hash sha256:3460474f05a6a5be745a442952fd9e902d6aae2d43ef3287b465b14bdc31ec2b
+kubeadm join 192.168.0.11:6443 --token t95iga.sslq87o0lncw10ou \
+    --discovery-token-ca-cert-hash sha256:d0be719cca5b12b336698d74c77894a237cc30cebcda28b2f6df93a8dbad8a10
 ```
 
 默认token有效期为24小时，当过期之后，该token就不可用了。这时就需要重新创建token，操作如下：
